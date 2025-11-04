@@ -20,17 +20,16 @@ TenzoRS485 rightMetatarsalRightCell             (newSerial, 5);
 inline bool getPermissionToStart() {
   if(Serial.available() > 0) {
     String _input = Serial.readStringUntil('\n');
-    delay(10);
     _input.trim();
-    Serial.println(_input);
     if(_input.equals("Start")) {
-      Serial.println("Tenzo");
+      Serial.println("Tenso");
       return false;
     }
     else return true;
   }
   return true;
 }
+
 enum SYSTEM_STATES : uint8_t {
     SS_MAIN_MENU,                   
     SS_EXERCISE_TURN_FOOT,              // 1
@@ -43,23 +42,25 @@ SYSTEM_STATES system_state = SS_MAIN_MENU;
 void setup() {
   Serial.begin(115200);
 
-  leftHipCell.begin(115200);                          
-  leftKneeCell.begin(115200);
-  leftHeelLeftCell.begin(115200);
+  // leftHipCell.begin(115200);                          
+  // leftKneeCell.begin(115200);
+  // leftHeelLeftCell.begin(115200);
   // leftHeelRightCell.begin(115200);
-  leftMetatarsalLeftCell.begin(115200);
+  // leftMetatarsalLeftCell.begin(115200);
   // leftMetatarsalRightCell.begin(115200);
 
-  rightHipCell.begin(115200);
-  rightKneeCell.begin(115200);
-  rightHeelLeftCell.begin(115200);
-  rightMetatarsalRightCell.begin(115200);
+  // rightHipCell.begin(115200);
+  // rightKneeCell.begin(115200);
+  // rightHeelLeftCell.begin(115200);
+  // rightMetatarsalRightCell.begin(115200);
   // rightMetatarsalLeftCell.begin(115200);
   // rightMetatarsalRightCell.begin(115200);
+
+  while(getPermissionToStart());
 }
 
 void loop() {
-  Serial.println("AFDf");
+  
   switch (system_state){
     case SS_MAIN_MENU:{
       if(Serial.available() > 0) {
@@ -79,6 +80,7 @@ void loop() {
         }
       }
     } break;
+
     case SS_MOVABLE_SURFACE_WALK:{
       if(Serial.available() > 0) {
         String _input = Serial.readStringUntil('\n');
@@ -122,6 +124,7 @@ void loop() {
       Serial.print(rand()%30);
       Serial.print(">");
     } break;
+
     case SS_EXERCISE_TURN_FOOT:{
       if(Serial.available() > 0) {
         String _input = Serial.readStringUntil('\n');
@@ -157,6 +160,7 @@ void loop() {
       Serial.print(rand()%30);
       Serial.print(">");
     } break;
+    
     case SS_EXERCISE_TURN_HIP:{
       if(Serial.available() > 0) {
         String _input = Serial.readStringUntil('\n');
@@ -187,18 +191,18 @@ void loop() {
   }
 
   if(PRINT_CELL == 1) { 
-    Serial.print("Л. бедро.: ");              Serial.print(leftHipCell.getCell());
-    Serial.print(" Л. колено.: ");             Serial.print(leftKneeCell.getCell());
-    Serial.print(" Л. пятка(л): ");            Serial.print(leftHeelLeftCell.getCell());
+    // Serial.print("Л. бедро.: ");              Serial.print(leftHipCell.getCell());
+    // Serial.print(" Л. колено.: ");             Serial.print(leftKneeCell.getCell());
+    // Serial.print(" Л. пятка(л): ");            Serial.print(leftHeelLeftCell.getCell());
     // Serial.print("Л. пятка(п): ");            Serial.print(leftHeelRightCell.getCell());
-    Serial.print(" Л. носок(л): ");            Serial.print(leftMetatarsalLeftCell.getCell());
+    // Serial.print(" Л. носок(л): ");            Serial.print(leftMetatarsalLeftCell.getCell());
     // Serial.print("Л. носок(п): ");            Serial.print(leftMetatarsalRightCell.getCell());
 
 
-    Serial.print(" П. бедро.: ");              Serial.print(rightHipCell.getCell());
-    Serial.print(" П. колено.: ");             Serial.print(rightKneeCell.getCell());
-    Serial.print(" П. пятка(л): ");            Serial.print(rightHeelLeftCell.getCell());
-    Serial.print(" П. пятка(п): ");            Serial.println(rightMetatarsalRightCell.getCell());
+    // Serial.print(" П. бедро.: ");              Serial.print(rightHipCell.getCell());
+    // Serial.print(" П. колено.: ");             Serial.print(rightKneeCell.getCell());
+    // Serial.print(" П. пятка(л): ");            Serial.print(rightHeelLeftCell.getCell());
+    // Serial.print(" П. пятка(п): ");            Serial.println(rightMetatarsalRightCell.getCell());
     // Serial.print("П. носок(л): ");            Serial.print(rightMetatarsalLeftCell.getCell());
     // Serial.print("П. носок(п): ");            Serial.println(rightMetatarsalRightCell.getCell());
   }
